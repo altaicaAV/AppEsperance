@@ -1,5 +1,5 @@
 services:
-  web:
+  app:
     build: .
     ports:
       - "3000:3000"
@@ -8,6 +8,7 @@ services:
       - /app/node_modules
     environment:
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/ecole
+      - WATCHPACK_POLLING=true
     depends_on:
       - db
 
