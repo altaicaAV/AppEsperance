@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -21,9 +22,9 @@ export default function Home() {
         <p className="text-center">
           Bienvenue sur le site web de l'école L'Espérance, établissement d'enseignement spécialisé
         </p>
-        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+        <Link href="/auth/login" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
           Se connecter
-        </button>
+        </Link>
       </div>
     </div>
   );

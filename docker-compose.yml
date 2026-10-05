@@ -13,16 +13,16 @@ services:
       - db
 
   db:
-    image: postgres:16-alpine
-    restart: always
+    image: postgres:17
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=ecole
+      POSTGRES_USER: esperance
+      POSTGRES_PASSWORD: esperance
+      POSTGRES_DB: esperance
     ports:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d
 
 volumes:
   pgdata:

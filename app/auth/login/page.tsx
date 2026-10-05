@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 export default function LoginPage() {
+  return (
     <div className="flex min-h-screen bg-white text-black">
       <div className="hidden md:block w-2/3 relative">
         <Image
@@ -37,4 +38,5 @@ export default function LoginPage() {
         </form>
       </div>
     </div>
+  )
 }
