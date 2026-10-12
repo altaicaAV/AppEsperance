@@ -1,17 +1,4 @@
 services:
-  app:
-    build: .
-    ports:
-      - "3000:3000"
-    volumes:
-      - .:/app
-      - /app/node_modules
-    environment:
-      - DATABASE_URL=postgresql://postgres:postgres@db:5432/ecole
-      - WATCHPACK_POLLING=true
-    depends_on:
-      - db
-
   db:
     image: postgres:17
     environment:

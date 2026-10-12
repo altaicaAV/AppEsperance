@@ -20,6 +20,12 @@ CREATE TABLE users (
     created_at    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE session (
+    id_session  VARCHAR(64) PRIMARY KEY,   -- hash SHA-256 du jeton, jamais le jeton lui-même
+    id_user     INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    expires_at  TIMESTAMP NOT NULL,
+    created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
 
 -- ---------------------------------------------------------------------
 -- 2. Acteurs (chacun peut être lié à un compte users)
