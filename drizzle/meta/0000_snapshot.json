@@ -1,0 +1,2311 @@
+{
+  "id": "00000000-0000-0000-0000-000000000000",
+  "prevId": "",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.users": {
+      "name": "users",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "users_id_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "role": {
+          "name": "role",
+          "type": "role_utilisateur",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "password_hash": {
+          "name": "password_hash",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "actif": {
+          "name": "actif",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "CURRENT_TIMESTAMP"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "users_email_key": {
+          "columns": [
+            "email"
+          ],
+          "nullsNotDistinct": false,
+          "name": "users_email_key"
+        }
+      },
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.session": {
+      "name": "session",
+      "schema": "",
+      "columns": {
+        "id_session": {
+          "name": "id_session",
+          "type": "varchar(64)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "id_user": {
+          "name": "id_user",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "CURRENT_TIMESTAMP"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "session_id_user_fkey": {
+          "name": "session_id_user_fkey",
+          "tableFrom": "session",
+          "tableTo": "users",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_user"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.direction": {
+      "name": "direction",
+      "schema": "",
+      "columns": {
+        "id_direction": {
+          "name": "id_direction",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "direction_id_direction_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "nom": {
+          "name": "nom",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "prenom": {
+          "name": "prenom",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "adresse": {
+          "name": "adresse",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "mail": {
+          "name": "mail",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "date_naissance": {
+          "name": "date_naissance",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "telephone": {
+          "name": "telephone",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "poste": {
+          "name": "poste",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_user": {
+          "name": "id_user",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "direction_id_user_fkey": {
+          "name": "direction_id_user_fkey",
+          "tableFrom": "direction",
+          "tableTo": "users",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_user"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "direction_id_user_key": {
+          "columns": [
+            "id_user"
+          ],
+          "nullsNotDistinct": false,
+          "name": "direction_id_user_key"
+        }
+      },
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.secretariat": {
+      "name": "secretariat",
+      "schema": "",
+      "columns": {
+        "id_secretaire": {
+          "name": "id_secretaire",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "secretariat_id_secretaire_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "nom": {
+          "name": "nom",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "prenom": {
+          "name": "prenom",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "adresse": {
+          "name": "adresse",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "mail": {
+          "name": "mail",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "date_naissance": {
+          "name": "date_naissance",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "telephone": {
+          "name": "telephone",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "poste": {
+          "name": "poste",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_user": {
+          "name": "id_user",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "secretariat_id_user_fkey": {
+          "name": "secretariat_id_user_fkey",
+          "tableFrom": "secretariat",
+          "tableTo": "users",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_user"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "secretariat_id_user_key": {
+          "columns": [
+            "id_user"
+          ],
+          "nullsNotDistinct": false,
+          "name": "secretariat_id_user_key"
+        }
+      },
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.enseignant": {
+      "name": "enseignant",
+      "schema": "",
+      "columns": {
+        "id_enseignant": {
+          "name": "id_enseignant",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "enseignant_id_enseignant_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "nom": {
+          "name": "nom",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "prenom": {
+          "name": "prenom",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "adresse": {
+          "name": "adresse",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "mail": {
+          "name": "mail",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "date_naissance": {
+          "name": "date_naissance",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "poste": {
+          "name": "poste",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "local_": {
+          "name": "local_",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id_user": {
+          "name": "id_user",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "enseignant_id_user_fkey": {
+          "name": "enseignant_id_user_fkey",
+          "tableFrom": "enseignant",
+          "tableTo": "users",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_user"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "enseignant_id_user_key": {
+          "columns": [
+            "id_user"
+          ],
+          "nullsNotDistinct": false,
+          "name": "enseignant_id_user_key"
+        }
+      },
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.personnel_paramedical": {
+      "name": "personnel_paramedical",
+      "schema": "",
+      "columns": {
+        "id_paramedical": {
+          "name": "id_paramedical",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "personnel_paramedical_id_paramedical_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "nom": {
+          "name": "nom",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "prenom": {
+          "name": "prenom",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "date_naissance": {
+          "name": "date_naissance",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "adresse": {
+          "name": "adresse",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "mail": {
+          "name": "mail",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "profession": {
+          "name": "profession",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "local_": {
+          "name": "local_",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id_user": {
+          "name": "id_user",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "personnel_paramedical_id_user_fkey": {
+          "name": "personnel_paramedical_id_user_fkey",
+          "tableFrom": "personnel_paramedical",
+          "tableTo": "users",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_user"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "personnel_paramedical_id_user_key": {
+          "columns": [
+            "id_user"
+          ],
+          "nullsNotDistinct": false,
+          "name": "personnel_paramedical_id_user_key"
+        }
+      },
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.tuteur_legal": {
+      "name": "tuteur_legal",
+      "schema": "",
+      "columns": {
+        "id_tuteur": {
+          "name": "id_tuteur",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "tuteur_legal_id_tuteur_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "nom": {
+          "name": "nom",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "prenom": {
+          "name": "prenom",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "adresse": {
+          "name": "adresse",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "mail": {
+          "name": "mail",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "date_naissance": {
+          "name": "date_naissance",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "telephone": {
+          "name": "telephone",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "lien": {
+          "name": "lien",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_user": {
+          "name": "id_user",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "tuteur_legal_id_user_fkey": {
+          "name": "tuteur_legal_id_user_fkey",
+          "tableFrom": "tuteur_legal",
+          "tableTo": "users",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_user"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "tuteur_legal_id_user_key": {
+          "columns": [
+            "id_user"
+          ],
+          "nullsNotDistinct": false,
+          "name": "tuteur_legal_id_user_key"
+        }
+      },
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.matiere": {
+      "name": "matiere",
+      "schema": "",
+      "columns": {
+        "id_matiere": {
+          "name": "id_matiere",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "matiere_id_matiere_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "nom": {
+          "name": "nom",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "heures": {
+          "name": "heures",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description_": {
+          "name": "description_",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.niveau": {
+      "name": "niveau",
+      "schema": "",
+      "columns": {
+        "id_niveau": {
+          "name": "id_niveau",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "niveau_id_niveau_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "nom_niveau": {
+          "name": "nom_niveau",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.programme": {
+      "name": "programme",
+      "schema": "",
+      "columns": {
+        "id_programme": {
+          "name": "id_programme",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "programme_id_programme_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "nom_programme": {
+          "name": "nom_programme",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "annee_scolaire": {
+          "name": "annee_scolaire",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description_": {
+          "name": "description_",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id_niveau": {
+          "name": "id_niveau",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "programme_id_niveau_fkey": {
+          "name": "programme_id_niveau_fkey",
+          "tableFrom": "programme",
+          "tableTo": "niveau",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_niveau"
+          ],
+          "columnsTo": [
+            "id_niveau"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.classe": {
+      "name": "classe",
+      "schema": "",
+      "columns": {
+        "id_classe": {
+          "name": "id_classe",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "classe_id_classe_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "nom_classe": {
+          "name": "nom_classe",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tranche_age": {
+          "name": "tranche_age",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "capacite": {
+          "name": "capacite",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_programme": {
+          "name": "id_programme",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id_enseignant": {
+          "name": "id_enseignant",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "classe_id_programme_fkey": {
+          "name": "classe_id_programme_fkey",
+          "tableFrom": "classe",
+          "tableTo": "programme",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_programme"
+          ],
+          "columnsTo": [
+            "id_programme"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "classe_id_enseignant_fkey": {
+          "name": "classe_id_enseignant_fkey",
+          "tableFrom": "classe",
+          "tableTo": "enseignant",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_enseignant"
+          ],
+          "columnsTo": [
+            "id_enseignant"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "classe_capacite_check": {
+          "name": "classe_capacite_check",
+          "value": "capacite > 0"
+        }
+      },
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.eleve": {
+      "name": "eleve",
+      "schema": "",
+      "columns": {
+        "id_eleve": {
+          "name": "id_eleve",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "eleve_id_eleve_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "nom": {
+          "name": "nom",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "prenom": {
+          "name": "prenom",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "adresse": {
+          "name": "adresse",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "mail": {
+          "name": "mail",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "date_naissance": {
+          "name": "date_naissance",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type_": {
+          "name": "type_",
+          "type": "type_enseignement",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id_classe": {
+          "name": "id_classe",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id_tuteur": {
+          "name": "id_tuteur",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id_user": {
+          "name": "id_user",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "eleve_id_classe_fkey": {
+          "name": "eleve_id_classe_fkey",
+          "tableFrom": "eleve",
+          "tableTo": "classe",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_classe"
+          ],
+          "columnsTo": [
+            "id_classe"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "eleve_id_tuteur_fkey": {
+          "name": "eleve_id_tuteur_fkey",
+          "tableFrom": "eleve",
+          "tableTo": "tuteur_legal",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_tuteur"
+          ],
+          "columnsTo": [
+            "id_tuteur"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "eleve_id_user_fkey": {
+          "name": "eleve_id_user_fkey",
+          "tableFrom": "eleve",
+          "tableTo": "users",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_user"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "eleve_id_user_key": {
+          "columns": [
+            "id_user"
+          ],
+          "nullsNotDistinct": false,
+          "name": "eleve_id_user_key"
+        }
+      },
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.evaluation": {
+      "name": "evaluation",
+      "schema": "",
+      "columns": {
+        "id_evaluation": {
+          "name": "id_evaluation",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "evaluation_id_evaluation_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "coefficient": {
+          "name": "coefficient",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type_evaluation": {
+          "name": "type_evaluation",
+          "type": "type_evaluation",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "date_evaluation": {
+          "name": "date_evaluation",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_matiere": {
+          "name": "id_matiere",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id_periode": {
+          "name": "id_periode",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "evaluation_id_matiere_fkey": {
+          "name": "evaluation_id_matiere_fkey",
+          "tableFrom": "evaluation",
+          "tableTo": "matiere",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_matiere"
+          ],
+          "columnsTo": [
+            "id_matiere"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "evaluation_id_periode_fkey": {
+          "name": "evaluation_id_periode_fkey",
+          "tableFrom": "evaluation",
+          "tableTo": "periode",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_periode"
+          ],
+          "columnsTo": [
+            "id_periode"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.periode": {
+      "name": "periode",
+      "schema": "",
+      "columns": {
+        "id_periode": {
+          "name": "id_periode",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "periode_id_periode_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "nom": {
+          "name": "nom",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "date_debut": {
+          "name": "date_debut",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "date_fin": {
+          "name": "date_fin",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "coefficient": {
+          "name": "coefficient",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "periode_check": {
+          "name": "periode_check",
+          "value": "date_fin >= date_debut"
+        }
+      },
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.conseil_de_classe": {
+      "name": "conseil_de_classe",
+      "schema": "",
+      "columns": {
+        "id_conseil": {
+          "name": "id_conseil",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "conseil_de_classe_id_conseil_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "date_conseil": {
+          "name": "date_conseil",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_periode": {
+          "name": "id_periode",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "conseil_de_classe_id_periode_fkey": {
+          "name": "conseil_de_classe_id_periode_fkey",
+          "tableFrom": "conseil_de_classe",
+          "tableTo": "periode",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_periode"
+          ],
+          "columnsTo": [
+            "id_periode"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.intervention": {
+      "name": "intervention",
+      "schema": "",
+      "columns": {
+        "id_intervention": {
+          "name": "id_intervention",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "intervention_id_intervention_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "type_intervention": {
+          "name": "type_intervention",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "frequence": {
+          "name": "frequence",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_paramedical": {
+          "name": "id_paramedical",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "intervention_id_paramedical_fkey": {
+          "name": "intervention_id_paramedical_fkey",
+          "tableFrom": "intervention",
+          "tableTo": "personnel_paramedical",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_paramedical"
+          ],
+          "columnsTo": [
+            "id_paramedical"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.activite_extra": {
+      "name": "activite_extra",
+      "schema": "",
+      "columns": {
+        "id_activite": {
+          "name": "id_activite",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "activite_extra_id_activite_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "nom": {
+          "name": "nom",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "lieu": {
+          "name": "lieu",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description_": {
+          "name": "description_",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "date_activite": {
+          "name": "date_activite",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "cout": {
+          "name": "cout",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.reunion": {
+      "name": "reunion",
+      "schema": "",
+      "columns": {
+        "id_reunion": {
+          "name": "id_reunion",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "reunion_id_reunion_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "date_reunion": {
+          "name": "date_reunion",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "commentaire": {
+          "name": "commentaire",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id_direction": {
+          "name": "id_direction",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "reunion_id_direction_fkey": {
+          "name": "reunion_id_direction_fkey",
+          "tableFrom": "reunion",
+          "tableTo": "direction",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_direction"
+          ],
+          "columnsTo": [
+            "id_direction"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.inscription": {
+      "name": "inscription",
+      "schema": "",
+      "columns": {
+        "id_inscription": {
+          "name": "id_inscription",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "inscription_id_inscription_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "date_inscription": {
+          "name": "date_inscription",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "total_paye": {
+          "name": "total_paye",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "statut_paiement": {
+          "name": "statut_paiement",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_eleve": {
+          "name": "id_eleve",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id_secretaire": {
+          "name": "id_secretaire",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "inscription_id_eleve_fkey": {
+          "name": "inscription_id_eleve_fkey",
+          "tableFrom": "inscription",
+          "tableTo": "eleve",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_eleve"
+          ],
+          "columnsTo": [
+            "id_eleve"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "inscription_id_secretaire_fkey": {
+          "name": "inscription_id_secretaire_fkey",
+          "tableFrom": "inscription",
+          "tableTo": "secretariat",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_secretaire"
+          ],
+          "columnsTo": [
+            "id_secretaire"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.commande": {
+      "name": "commande",
+      "schema": "",
+      "columns": {
+        "id_commande": {
+          "name": "id_commande",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "commande_id_commande_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "date_commande": {
+          "name": "date_commande",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "montant_total": {
+          "name": "montant_total",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'0'"
+        },
+        "id_secretaire": {
+          "name": "id_secretaire",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "commande_id_secretaire_fkey": {
+          "name": "commande_id_secretaire_fkey",
+          "tableFrom": "commande",
+          "tableTo": "secretariat",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_secretaire"
+          ],
+          "columnsTo": [
+            "id_secretaire"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.fourniture": {
+      "name": "fourniture",
+      "schema": "",
+      "columns": {
+        "id_produit": {
+          "name": "id_produit",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "fourniture_id_produit_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "nom": {
+          "name": "nom",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "prix": {
+          "name": "prix",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "fourniture_prix_check": {
+          "name": "fourniture_prix_check",
+          "value": "prix >= (0)::numeric"
+        }
+      },
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.programme_matiere": {
+      "name": "programme_matiere",
+      "schema": "",
+      "columns": {
+        "id_programme": {
+          "name": "id_programme",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_matiere": {
+          "name": "id_matiere",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "coefficient": {
+          "name": "coefficient",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "programme_matiere_id_programme_fkey": {
+          "name": "programme_matiere_id_programme_fkey",
+          "tableFrom": "programme_matiere",
+          "tableTo": "programme",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_programme"
+          ],
+          "columnsTo": [
+            "id_programme"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "programme_matiere_id_matiere_fkey": {
+          "name": "programme_matiere_id_matiere_fkey",
+          "tableFrom": "programme_matiere",
+          "tableTo": "matiere",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_matiere"
+          ],
+          "columnsTo": [
+            "id_matiere"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "programme_matiere_pkey": {
+          "name": "programme_matiere_pkey",
+          "columns": [
+            "id_programme",
+            "id_matiere"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.absence": {
+      "name": "absence",
+      "schema": "",
+      "columns": {
+        "id_eleve": {
+          "name": "id_eleve",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "date_": {
+          "name": "date_",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "statut": {
+          "name": "statut",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "absence_id_eleve_fkey": {
+          "name": "absence_id_eleve_fkey",
+          "tableFrom": "absence",
+          "tableTo": "eleve",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_eleve"
+          ],
+          "columnsTo": [
+            "id_eleve"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "absence_pkey": {
+          "name": "absence_pkey",
+          "columns": [
+            "id_eleve",
+            "date_"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.resultat": {
+      "name": "resultat",
+      "schema": "",
+      "columns": {
+        "id_evaluation": {
+          "name": "id_evaluation",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_eleve": {
+          "name": "id_eleve",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "note": {
+          "name": "note",
+          "type": "numeric(5, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "commentaire": {
+          "name": "commentaire",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "resultat_id_evaluation_fkey": {
+          "name": "resultat_id_evaluation_fkey",
+          "tableFrom": "resultat",
+          "tableTo": "evaluation",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_evaluation"
+          ],
+          "columnsTo": [
+            "id_evaluation"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "resultat_id_eleve_fkey": {
+          "name": "resultat_id_eleve_fkey",
+          "tableFrom": "resultat",
+          "tableTo": "eleve",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_eleve"
+          ],
+          "columnsTo": [
+            "id_eleve"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "resultat_pkey": {
+          "name": "resultat_pkey",
+          "columns": [
+            "id_evaluation",
+            "id_eleve"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.visite": {
+      "name": "visite",
+      "schema": "",
+      "columns": {
+        "id_intervention": {
+          "name": "id_intervention",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_eleve": {
+          "name": "id_eleve",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "date_visite": {
+          "name": "date_visite",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "etat_visite": {
+          "name": "etat_visite",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "visite_id_intervention_fkey": {
+          "name": "visite_id_intervention_fkey",
+          "tableFrom": "visite",
+          "tableTo": "intervention",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_intervention"
+          ],
+          "columnsTo": [
+            "id_intervention"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "visite_id_eleve_fkey": {
+          "name": "visite_id_eleve_fkey",
+          "tableFrom": "visite",
+          "tableTo": "eleve",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_eleve"
+          ],
+          "columnsTo": [
+            "id_eleve"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "visite_pkey": {
+          "name": "visite_pkey",
+          "columns": [
+            "id_intervention",
+            "id_eleve",
+            "date_visite"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.prof_acti": {
+      "name": "prof_acti",
+      "schema": "",
+      "columns": {
+        "id_enseignant": {
+          "name": "id_enseignant",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_activite": {
+          "name": "id_activite",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "statut": {
+          "name": "statut",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "commentaire": {
+          "name": "commentaire",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "prof_acti_id_enseignant_fkey": {
+          "name": "prof_acti_id_enseignant_fkey",
+          "tableFrom": "prof_acti",
+          "tableTo": "enseignant",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_enseignant"
+          ],
+          "columnsTo": [
+            "id_enseignant"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "prof_acti_id_activite_fkey": {
+          "name": "prof_acti_id_activite_fkey",
+          "tableFrom": "prof_acti",
+          "tableTo": "activite_extra",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_activite"
+          ],
+          "columnsTo": [
+            "id_activite"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "prof_acti_pkey": {
+          "name": "prof_acti_pkey",
+          "columns": [
+            "id_enseignant",
+            "id_activite"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.presence_activite": {
+      "name": "presence_activite",
+      "schema": "",
+      "columns": {
+        "id_eleve": {
+          "name": "id_eleve",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_activite": {
+          "name": "id_activite",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "statut": {
+          "name": "statut",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "paiement": {
+          "name": "paiement",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "presence_activite_id_eleve_fkey": {
+          "name": "presence_activite_id_eleve_fkey",
+          "tableFrom": "presence_activite",
+          "tableTo": "eleve",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_eleve"
+          ],
+          "columnsTo": [
+            "id_eleve"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "presence_activite_id_activite_fkey": {
+          "name": "presence_activite_id_activite_fkey",
+          "tableFrom": "presence_activite",
+          "tableTo": "activite_extra",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_activite"
+          ],
+          "columnsTo": [
+            "id_activite"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "presence_activite_pkey": {
+          "name": "presence_activite_pkey",
+          "columns": [
+            "id_eleve",
+            "id_activite"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.presence_reunion": {
+      "name": "presence_reunion",
+      "schema": "",
+      "columns": {
+        "id_enseignant": {
+          "name": "id_enseignant",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_reunion": {
+          "name": "id_reunion",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "statut": {
+          "name": "statut",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "commentaire": {
+          "name": "commentaire",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "presence_reunion_id_enseignant_fkey": {
+          "name": "presence_reunion_id_enseignant_fkey",
+          "tableFrom": "presence_reunion",
+          "tableTo": "enseignant",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_enseignant"
+          ],
+          "columnsTo": [
+            "id_enseignant"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "presence_reunion_id_reunion_fkey": {
+          "name": "presence_reunion_id_reunion_fkey",
+          "tableFrom": "presence_reunion",
+          "tableTo": "reunion",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_reunion"
+          ],
+          "columnsTo": [
+            "id_reunion"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "presence_reunion_pkey": {
+          "name": "presence_reunion_pkey",
+          "columns": [
+            "id_enseignant",
+            "id_reunion"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.ligne_commande": {
+      "name": "ligne_commande",
+      "schema": "",
+      "columns": {
+        "id_commande": {
+          "name": "id_commande",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_produit": {
+          "name": "id_produit",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "quantite": {
+          "name": "quantite",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "reduction": {
+          "name": "reduction",
+          "type": "numeric(5, 2)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "ligne_commande_id_commande_fkey": {
+          "name": "ligne_commande_id_commande_fkey",
+          "tableFrom": "ligne_commande",
+          "tableTo": "commande",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_commande"
+          ],
+          "columnsTo": [
+            "id_commande"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "ligne_commande_id_produit_fkey": {
+          "name": "ligne_commande_id_produit_fkey",
+          "tableFrom": "ligne_commande",
+          "tableTo": "fourniture",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_produit"
+          ],
+          "columnsTo": [
+            "id_produit"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "ligne_commande_pkey": {
+          "name": "ligne_commande_pkey",
+          "columns": [
+            "id_commande",
+            "id_produit"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "ligne_commande_quantite_check": {
+          "name": "ligne_commande_quantite_check",
+          "value": "quantite > 0"
+        }
+      },
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.conseil_eleve": {
+      "name": "conseil_eleve",
+      "schema": "",
+      "columns": {
+        "id_conseil": {
+          "name": "id_conseil",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_eleve": {
+          "name": "id_eleve",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ressources": {
+          "name": "ressources",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "difficultes": {
+          "name": "difficultes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "objectifs": {
+          "name": "objectifs",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "conseil_eleve_id_conseil_fkey": {
+          "name": "conseil_eleve_id_conseil_fkey",
+          "tableFrom": "conseil_eleve",
+          "tableTo": "conseil_de_classe",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_conseil"
+          ],
+          "columnsTo": [
+            "id_conseil"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "conseil_eleve_id_eleve_fkey": {
+          "name": "conseil_eleve_id_eleve_fkey",
+          "tableFrom": "conseil_eleve",
+          "tableTo": "eleve",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "id_eleve"
+          ],
+          "columnsTo": [
+            "id_eleve"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "conseil_eleve_pkey": {
+          "name": "conseil_eleve_pkey",
+          "columns": [
+            "id_conseil",
+            "id_eleve"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.role_utilisateur": {
+      "name": "role_utilisateur",
+      "values": [
+        "direction",
+        "secretariat",
+        "enseignant",
+        "paramedical",
+        "tuteur",
+        "eleve"
+      ],
+      "schema": "public"
+    },
+    "public.type_enseignement": {
+      "name": "type_enseignement",
+      "values": [
+        "type 1",
+        "type 2",
+        "type 8"
+      ],
+      "schema": "public"
+    },
+    "public.type_evaluation": {
+      "name": "type_evaluation",
+      "values": [
+        "controle",
+        "examen",
+        "devoir",
+        "projet"
+      ],
+      "schema": "public"
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "tables": {}
+  }
+}
