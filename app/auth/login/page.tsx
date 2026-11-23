@@ -33,6 +33,9 @@ export default function LoginPage() {
             {enCours ? "Connexion..." : "Se connecter"}
           </button>
         </form>
+        <a href="/auth/mot-de-passe-oublie" className="text-sm text-blue-600 hover:underline mt-4">
+          Mot de passe oublié ?
+        </a>
       </div>
     </div>
   )
